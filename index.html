@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Surprise</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: #000;
+    font-family: Arial, sans-serif;
+}
+
+.bg-photo {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.cake-area {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 260px;
+    height: 260px;
+    transform: translate(-50%, -50%);
+}
+
+.cake-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.half {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.half img {
+    position: absolute;
+    top: 0;
+    width: 200%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.left {
+    left: 0;
+}
+
+.left img {
+    left: 0;
+}
+
+.right {
+    right: 0;
+}
+
+.right img {
+    right: 0;
+}
+
+.cut-button {
+    position: absolute;
+    top: calc(50% + 155px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 13px 30px;
+    border: none;
+    border-radius: 30px;
+    background: #ff4d91;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cake-area.cut .cake-image {
+    display: none;
+}
+
+.cake-area.cut .left {
+    animation: leftSlide 3s ease forwards;
+}
+
+.cake-area.cut .right {
+    animation: rightSlide 3s ease forwards;
+}
+
+@keyframes leftSlide {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    65% {
+        transform: translateX(-180%);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-180%);
+        opacity: 0;
+    }
+}
+
+@keyframes rightSlide {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    65% {
+        transform: translateX(180%);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(180%);
+        opacity: 0;
+    }
+}
+
+/* Only photo, no box or border */
+.gift-photo {
+    position: absolute;
+    top: -220px;
+    left: 50%;
+    width: 145px;
+    height: auto;
+    max-height: 200px;
+    object-fit: contain;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    transform: translateX(-50%);
+    opacity: 0;
+    cursor: pointer;
+}
+
+.gift-photo.fall {
+    animation: photoFall 2s cubic-bezier(.25,.8,.3,1.2) forwards;
+}
+
+@keyframes photoFall {
+    0% {
+        top: -220px;
+        opacity: 0;
+        transform: translateX(-50%) rotate(-20deg);
+    }
+    65% {
+        top: 55%;
+        opacity: 1;
+        transform: translateX(-50%) rotate(15deg);
+    }
+    80% {
+        top: 43%;
+        transform: translateX(-50%) rotate(-8deg);
+    }
+    100% {
+        top: 48%;
+        opacity: 1;
+        transform: translateX(-50%) rotate(0deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<img src="gf.jpg" class="bg-photo">
+
+<div class="cake-area" id="cake">
+    <img src="cake.png" class="cake-image">
+
+    <div class="half left">
+        <img src="cake.png">
+    </div>
+
+    <div class="half right">
+        <img src="cake.png">
+    </div>
+</div>
+
+<button class="cut-button" id="cutBtn" onclick="cutCake()">
+    CUT CAKE 🎂
+</button>
+
+<img src="gift.jpg" class="gift-photo" id="giftPhoto"
+     onclick="openNewPage()">
+
+<script>
+function cutCake() {
+    const cake = document.getElementById("cake");
+    const button = document.getElementById("cutBtn");
+
+    button.style.display = "none";
+    cake.classList.add("cut");
+
+    setTimeout(() => {
+        cake.style.display = "none";
+
+        const gift = document.getElementById("giftPhoto");
+        gift.classList.add("fall");
+    }, 3100);
+}
+
+function openNewPage() {
+    window.location.href = "page2.html";
+}
+</script>
+
+</body>
+</html>
