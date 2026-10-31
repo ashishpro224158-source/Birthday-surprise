@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Surprise</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: black;
+}
+
+/* Background Photo */
+.new-photo {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0);
+    animation: brightnessOpen 5s ease forwards;
+}
+
+@keyframes brightnessOpen {
+    to {
+        filter: brightness(1);
+    }
+}
+
+/* Flying Birthday Paper */
+.flying-photo {
+    position: fixed;
+    top: -400px;
+    left: 50%;
+    width: 260px;
+    height: auto;
+    max-height: 75vh;
+    object-fit: contain;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    outline: none;
+    opacity: 0;
+    transform: translateX(-50%);
+    animation: fallDown 3.5s cubic-bezier(.22,.75,.35,1.2) 1s forwards;
+}
+
+@keyframes fallDown {
+    0% {
+        top: -400px;
+        opacity: 0;
+        transform: translateX(-50%) rotate(-15deg) scale(0.7);
+    }
+
+    55% {
+        top: 52%;
+        opacity: 1;
+        transform: translateX(-50%) rotate(12deg) scale(1);
+    }
+
+    70% {
+        top: 43%;
+        transform: translateX(-50%) rotate(-8deg) scale(1.05);
+    }
+
+    85% {
+        top: 51%;
+        transform: translateX(-50%) rotate(4deg) scale(1.1);
+    }
+
+    100% {
+        top: 50%;
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(0deg) scale(1.4);
+    }
+}
+
+/* Heart Bubbles */
+.heart-container {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.heart-bubble {
+    position: absolute;
+    bottom: -50px;
+    opacity: 0;
+    animation: heartRise linear forwards;
+    filter: drop-shadow(0 0 4px #ff8fa3);
+}
+
+@keyframes heartRise {
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(0.5);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.85;
+    }
+
+    25% {
+        transform: translate(20px, -25vh) rotate(20deg) scale(1);
+    }
+
+    45% {
+        transform: translate(-25px, -45vh) rotate(-20deg) scale(0.9);
+    }
+
+    65% {
+        transform: translate(20px, -65vh) rotate(25deg) scale(0.8);
+        opacity: 0.5;
+    }
+
+    85% {
+        transform: translate(-15px, -85vh) rotate(-15deg) scale(0.7);
+        opacity: 0.2;
+    }
+
+    100% {
+        transform: translate(15px, -110vh) rotate(20deg) scale(0.4);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Original Background Photo -->
+<img src="page2.jpg" class="new-photo">
+
+<!-- Original Flying Photo -->
+<img src="floating.jpg" class="flying-photo">
+
+<!-- Heart Bubbles -->
+<div class="heart-container" id="heartContainer"></div>
+
+<script>
+const container = document.getElementById("heartContainer");
+
+function createHeart() {
+
+    const heart = document.createElement("div");
+
+    heart.className = "heart-bubble";
+
+    const hearts = ["❤️", "💕", "💗", "💖"];
+
+    heart.innerHTML =
+        hearts[Math.floor(Math.random() * hearts.length)];
+
+    heart.style.left = Math.random() * 100 + "vw";
+
+    heart.style.fontSize =
+        (12 + Math.random() * 15) + "px";
+
+    heart.style.animationDuration =
+        (6 + Math.random() * 3) + "s";
+
+    container.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 10000);
+}
+
+/* Few Hearts, Smooth Animation */
+setInterval(createHeart, 650);
+
+</script>
+
+</body>
+</html>
